@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { ListBodyComponent } from "@gifs/components/list-body/list-body";
 
 @Component({
   selector: 'app-trending-page',
-  imports: [],
+  imports: [ListBodyComponent],
   templateUrl: './trending-page.html',
   styleUrl: './trending-page.css'
 })
