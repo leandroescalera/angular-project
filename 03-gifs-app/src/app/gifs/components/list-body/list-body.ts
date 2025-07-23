@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ListItemBodyComponent } from "../list-item-body/list-item-body";
 
 
@@ -9,5 +9,5 @@ import { ListItemBodyComponent } from "../list-item-body/list-item-body";
   styleUrl: './list-body.css'
 })
 export class ListBodyComponent {
-
+  gifs = input.required<string[]>();
 }

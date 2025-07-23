@@ -1,17 +1,5 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
-  <gifs-list-item-body/>
+  @for (gif of gifs(); track gif) {
+  <gifs-list-item-body [imageUrl]="gif" />
+  }
 </div>
