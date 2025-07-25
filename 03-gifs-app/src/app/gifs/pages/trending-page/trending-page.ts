@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ListBodyComponent } from "@gifs/components/list-body/list-body";
+import { GifService } from '../../services/gifs.service';
 
 
 const imageUrls: string[] = [
@@ -25,4 +26,6 @@ const imageUrls: string[] = [
 })
 export default class TrendingPageComponent {
   gifs = signal(imageUrls);
+
+  gifService = inject(GifService);
 }
