@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { GifService } from '@gifs/services/gifs.service';
 
 interface MenuOption {
   icon: string;
@@ -15,6 +16,9 @@ interface MenuOption {
   styleUrl: './side-menu-options.css'
 })
 export class SideMenuOptionsComponent {
+
+  gifService = inject(GifService);
+  searchHistoryKeys = computed(() => Object.keys(this.gifService.searchHistory()));
 
   menuOptions: MenuOption[] = [
     {
