@@ -33,8 +33,5 @@ export class SideMenuOptionsComponent {
       route: '/dashboard/search',
       sublabel: 'Buscar Gifs',
     },
-
   ]
-
-
 }
