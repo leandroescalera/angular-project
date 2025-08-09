@@ -1,4 +1,4 @@
-import { effect, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
@@ -23,6 +23,14 @@ export class GifService {
   trendingGifs = signal<Gif[]>([]);
   searchingGifs = signal<Gif[]>([]);
   trendingGifsLoading = signal(true);
+  trendingGifsGroup = computed<Gif[][]>(() => {
+    const groups: Gif[][] = [];
+    for (let i = 0; i < this.trendingGifs().length; i += 3 ) {
+      groups.push(this.trendingGifs().slice(i, i + 3));
+    }
+    console.log('Trending Gifs Groups:', groups);
+    return groups;
+  })
   searchHistory = signal<Record<string, Gif[]>>(loadFromLocalStorage());
 
   saveGifsToLocalStorage = effect(() => {
