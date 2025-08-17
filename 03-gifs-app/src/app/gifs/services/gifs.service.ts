@@ -23,9 +23,11 @@ export class GifService {
   trendingGifs = signal<Gif[]>([]);
   searchingGifs = signal<Gif[]>([]);
   trendingGifsLoading = signal(true);
+  private tradingPage = signal(0);
+
   trendingGifsGroup = computed<Gif[][]>(() => {
     const groups: Gif[][] = [];
-    for (let i = 0; i < this.trendingGifs().length; i += 3 ) {
+    for (let i = 0; i < this.trendingGifs().length; i += 3) {
       groups.push(this.trendingGifs().slice(i, i + 3));
     }
     console.log('Trending Gifs Groups:', groups);
@@ -47,14 +49,14 @@ export class GifService {
       params: {
         api_key: environment.gyphyApiKey,
         limit: '20',
-        offset: '0',
+        offset: this.tradingPage() * 20,
         rating: 'g',
       }
     }).subscribe((resp) => {
       const gifs = GifMapper.mapperToGiphyItemToGifArray(resp.data);
-      this.trendingGifs.set(gifs);
+      this.trendingGifs.update(currentGifs => [...currentGifs,...gifs]);
+      this.tradingPage.update(page => page + 1);
       this.trendingGifsLoading.set(false);
-      console.log('Trending Gifs:', gifs);
     })
   }
 
