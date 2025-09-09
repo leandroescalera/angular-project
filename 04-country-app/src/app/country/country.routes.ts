@@ -1,0 +1,22 @@
+import { CountryLayoutComponent } from './layouts/country-layout/country-layout';
+import { Route } from "@angular/router";
+import { ByCapitalPageComponent } from './pages/by-capital-page/by-capital-page';
+
+export const countryRoutes: Route[] = [
+  {
+    path: '',
+    component: CountryLayoutComponent,
+    children: [
+      {
+        path: 'by-capital',
+        component: ByCapitalPageComponent
+      },
+      {
+        path: '**',
+        redirectTo: 'by-capital'
+      }
+    ]
+  },
+];
+
+export default countryRoutes;
