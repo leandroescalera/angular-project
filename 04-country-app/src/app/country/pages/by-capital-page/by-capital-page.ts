@@ -30,6 +30,5 @@ export class ByCapitalPageComponent {
         this.countries.set(countries);
         console.log(countries)
       });
-
   }
 }
