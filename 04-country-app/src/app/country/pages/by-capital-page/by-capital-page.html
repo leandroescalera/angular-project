@@ -5,5 +5,10 @@
 />
 
 <!-- country-list -->
-<country-list [countries]="countries()"/>
+ @if (isError)
+ {
+  <h3>{{ isError }}</h3>
+ }else{
+   <country-list [countries]="countries()"/>
+ }
 
