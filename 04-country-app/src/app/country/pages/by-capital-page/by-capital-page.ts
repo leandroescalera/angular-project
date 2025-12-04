@@ -19,20 +19,19 @@ export class ByCapitalPageComponent {
 
 
   onSearch(query: string) {
-    if (this.isLoading()) return;
-
     this.isLoading.set(true);
     this.isError.set(null);
-
     this.countryService.searchByCapital(query)
       .subscribe({
         next: (countries) => {
           this.isLoading.set(false);
           this.countries.set(countries);
-        },error: (err) => {
+        },
+        error: (err) => {
           this.isLoading.set(false);
           this.countries.set([]);
-          this.isError.(`No se encontro un pais con esa capital ${query}´);
+          this.isError.set(`No se encontro un pais con esa capital ${query}`);
+        },
       });
   }
 }

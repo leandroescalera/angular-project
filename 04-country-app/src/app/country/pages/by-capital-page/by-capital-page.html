@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!-- country-search-input -->
 <country-search-input
   placeholder="Buscar por capital"
@@ -5,10 +6,9 @@
 />
 
 <!-- country-list -->
- @if (isError)
- {
-  <h3>{{ isError }}</h3>
- }else{
-   <country-list [countries]="countries()"/>
- }
+@if (isError()) {
+  <h3>{{ isError() }}</h3>
+} @else {
+  <country-list [countries]="countries()" />
+}
 
