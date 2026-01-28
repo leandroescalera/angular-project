@@ -1,0 +1,19 @@
+import { Component, inject } from '@angular/core';
+import { Location } from '@angular/common';
+
+
+@Component({
+  selector: 'app-not-found',
+  imports: [],
+  templateUrl: './not-found.html',
+  styleUrl: './not-found.css'
+})
+export class NotFoundComponent {
+
+  location = inject(Location);
+
+  goBack(): void {
+    this.location.back();
+  }
+}
+
