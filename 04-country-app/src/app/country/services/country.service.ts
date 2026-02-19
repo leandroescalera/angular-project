@@ -4,6 +4,7 @@ import { RESTCountry } from '../interfaces/rest-country.interface';
 import { map, Observable, catchError, throwError, delay, of, tap } from 'rxjs';
 import type { Country } from '../interfaces/country.interface';
 import { CountryMapper } from '../mappers/country.mapper';
+import { Region } from '../interfaces/region.type';
 
 const API_URL = 'https://restcountries.com/v3.1';
 
@@ -13,6 +14,9 @@ const API_URL = 'https://restcountries.com/v3.1';
 export class CountryService {
   private http = inject(HttpClient);
   private queryCacheByCapital = new Map<string, Country[]>();
+  private queryCacheCountry = new Map<string, Country[]>();
+  private queryCacheByRegion = new Map<Region, Country[]>();
+
 
   searchByCapital(query: string): Observable<Country[]> {
     query = query.toLowerCase();
@@ -47,7 +51,7 @@ export class CountryService {
       .get<RESTCountry[]>(url)
       .pipe(
         map((resp) => CountryMapper.mapRestCountryArrayToCountryArray(resp)),
-        tap((countries) => { this.queryCacheByCapital.set(query, countries) }),
+        tap((countries) => { this.queryCacheCountry.set(query, countries) }),
         delay(1500),
         catchError((err) => {
           console.error('Error fetching', err);
@@ -60,7 +64,6 @@ export class CountryService {
 
   searchCountryByAlphaCode(code: string): Observable<Country[]> {
     const url = `${API_URL}/alpha/${code}`;
-
     return this.http
       .get<RESTCountry[]>(url)
       .pipe(
@@ -70,6 +73,26 @@ export class CountryService {
           console.error('Error fetching', err);
           return throwError(
             () => new Error(`No se puede obtener paises con ese codigo ${code}`)
+          );
+        })
+      );
+  }
+
+  searchByRegion(region: Region): Observable<Country[]> {
+    const url = `${API_URL}/region/${region}`;
+    if (this.queryCacheByRegion.has(region)) {
+      return of(this.queryCacheByRegion.get(region) ?? []);
+    }
+
+    return this.http
+      .get<RESTCountry[]>(url)
+      .pipe(
+        map((resp) => CountryMapper.mapRestCountryArrayToCountryArray(resp)),
+        tap((countries) => { this.queryCacheByRegion.set(region, countries) }),
+        catchError((err) => {
+          console.error('Error fetching', err);
+          return throwError(
+            () => new Error(`No se puede obtener paises de esa region ${region}`)
           );
         })
       );
