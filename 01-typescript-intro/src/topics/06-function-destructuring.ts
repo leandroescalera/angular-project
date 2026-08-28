@@ -15,30 +15,28 @@ const tablet: Product = {
 
 interface TaxCalculationOptions {
     tax: number;
-    product: Product[];
+    products: Product[];
 }
 
-function taxCalculation(options : TaxCalculationOptions): number[] {
+function taxCalculation({ tax, products }: TaxCalculationOptions): [number, number] {
 
     let total = 0;
-    options.product.forEach((product ) => {
-        total += product.price;
-    }); 
-    return [options.product[0].price, total];
+    products.forEach(({ price }) => {
+        total += price;
+    });
+    return [products[0].price, total * tax];
 }
 
 const shopingCart: Product[] = [phone, tablet];
 const tax = 0.15;
 
-const result = taxCalculation({
-    product: shopingCart,
+const [total, totalTax] = taxCalculation({
+    products: shopingCart,
     tax: tax
 });
 
-console.log('Total: ', result[0]);
+console.log('Total: ', total);
 
-console.log('Total + Tax: ', result[1] * tax); 
+console.log('Tax: ', totalTax);
 
-
-
-export {}
+export { }
