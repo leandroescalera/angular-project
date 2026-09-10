@@ -1,15 +1,38 @@
 export class Person {
 
-    public name: string;
-    public address: string;
+    public firstName: string;
+    private lastName?: string;
 
-    constructor(name: string, address: string) {
-        this.name = name;
-        this.address = address;
+    constructor(
+        public firstName: string,
+        public lastName: string,
+        public address: string
+    ) {
     }
 }
 
-const iroman = new Person('Tony Stark', 'Malibu, California');
+// export class Hero extends Person {
 
-console.log(iroman.name); // Tony Stark
-console.log(iroman.address); // Error: Property 'address' is private and only accessible within class 'Person'.
+//     constructor(alterEgo: string, age: number, realName: string) {
+//         super(realName, 'New York');
+//     }
+
+// }
+
+export class Hero {
+
+    constructor(
+        public alterEgo: string,
+        public age: number,
+        public realName: string,
+        public person: Person,
+    ) {
+
+    }
+
+}
+
+const tony = new Person('Tony','Stark', 'New York');
+const iroman = new Hero('Ironman', 45, 'Tony', tony);
+
+console.log(iroman); // Tony Stark
